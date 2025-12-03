@@ -13,7 +13,6 @@ defmodule Learning.Application do
       {Ecto.Migrator,
         repos: Application.fetch_env!(:learning, :ecto_repos),
         skip: skip_migrations?()},
-      {DNSCluster, query: Application.get_env(:learning, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Learning.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: Learning.Finch},
