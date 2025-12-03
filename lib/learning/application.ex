@@ -7,20 +7,19 @@ defmodule Learning.Application do
 
   @impl true
   def start(_type, _args) do
-    children =
-      [
-        LearningWeb.Telemetry,
-        Learning.Repo,
-        {Ecto.Migrator,
-         repos: Application.fetch_env!(:learning, :ecto_repos), skip: skip_migrations?()},
-        {Phoenix.PubSub, name: Learning.PubSub},
-        # Start the Finch HTTP client for sending emails
-        {Finch, name: Learning.Finch},
-        # Start a worker by calling: Learning.Worker.start_link(arg)
-        # {Learning.Worker, arg},
-        # Start to serve requests, typically the last entry
-        LearningWeb.Endpoint
-      ]
+    children = [
+      LearningWeb.Telemetry,
+      Learning.Repo,
+      {Ecto.Migrator,
+       repos: Application.fetch_env!(:learning, :ecto_repos), skip: skip_migrations?()},
+      {Phoenix.PubSub, name: Learning.PubSub},
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Learning.Finch},
+      # Start a worker by calling: Learning.Worker.start_link(arg)
+      # {Learning.Worker, arg},
+      # Start to serve requests, typically the last entry
+      LearningWeb.Endpoint
+    ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
