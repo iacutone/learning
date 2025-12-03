@@ -1,0 +1,53 @@
+<div style="position: relative; overflow: hidden; padding: 40px 20px;">
+  <!-- Floating decorations -->
+  <div class="decoration float" style="top: 80px; left: 30px;">⭐</div>
+  <div class="decoration float" style="top: 150px; right: 40px; animation-delay: 1s;">🌈</div>
+  <div class="decoration float" style="bottom: 200px; left: 50px; animation-delay: 0.5s;">✨</div>
+  <div class="decoration float" style="bottom: 100px; right: 60px; animation-delay: 1.5s;">🎈</div>
+
+  <div class="main-container text-center" style="position: relative; z-index: 1;">
+    <!-- Mascot and Title -->
+    <div style="margin-bottom: 30px;">
+      <div class="bounce-slow" style="font-size: 6rem; display: inline-block;">🐵</div>
+      <h1 class="title title-red">Hi, I'm Milo!</h1>
+      <p class="subtitle" style="color: #4D96FF;">Let's Learn Together! 🎉</p>
+    </div>
+
+    <!-- Big Play Button -->
+    <div style="margin-bottom: 40px;">
+      <a href="/game" class="btn btn-green" style="font-size: 2rem; padding: 22px 50px;">
+        🎮 PLAY NOW!
+      </a>
+    </div>
+
+    <!-- Subject Cards -->
+    <div class="subject-grid">
+      <div class="subject-card subject-card-blue">
+        <div class="subject-icon">📖</div>
+        <div class="subject-title">Reading</div>
+        <div class="subject-desc">Fun stories to read!</div>
+      </div>
+      <div class="subject-card subject-card-orange">
+        <div class="subject-icon">🔢</div>
+        <div class="subject-title">Math</div>
+        <div class="subject-desc">Numbers are cool!</div>
+      </div>
+      <div class="subject-card subject-card-purple">
+        <div class="subject-icon">📝</div>
+        <div class="subject-title">Words</div>
+        <div class="subject-desc">Learn new words!</div>
+      </div>
+    </div>
+
+    <!-- Login prompt -->
+    <%= if @current_user do %>
+      <div class="info-box info-green" style="display: inline-block;">
+        <strong>🌟 Welcome back, superstar! Your scores are being saved!</strong>
+      </div>
+    <% else %>
+      <div class="info-box info-blue" style="display: inline-block;">
+        <strong><a href="/users/register" style="color: #FF6B6B;">Join the fun</a> to save your scores! 🏆</strong>
+      </div>
+    <% end %>
+  </div>
+</div>
