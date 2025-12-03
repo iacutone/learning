@@ -1,0 +1,49 @@
+service: learning
+image: registry.iacutone.synology.me/learning
+
+servers:
+  web:
+    - "5.161.60.147"
+
+registry:
+  server: registry.iacutone.synology.me
+  username: iacutone
+  password:
+    - DOCKER_REGISTRY_PASSWORD
+
+proxy:
+  ssl: true
+  app_port: 4000
+  host: learning.iacut.one
+
+  healthcheck:
+    interval: 5
+    path: /
+    timeout: 3
+
+# Environment variables
+env:
+  clear:
+    PHX_SERVER: true
+    PORT: 4000
+    SHELL: /bin/sh
+  secret:
+    - AWS_ACCESS_KEY
+    - AWS_SECRET_KEY
+    - DATABASE_PATH
+    - LITESTREAM_ACCESS_KEY_ID
+    - LITESTREAM_SECRET_ACCESS_KEY
+    - REPLICA_URL
+    - SECRET_KEY_BASE
+
+builder:
+  arch: amd64
+
+# Persistent volumes for SQLite database
+volumes:
+  - "/var/lib/learning:/app/data"
+
+aliases:
+  console: app exec --interactive --reuse "/app/bin/learning remote"
+  shell: app exec --interactive --reuse "/bin/sh"
+  logs: app logs -f
