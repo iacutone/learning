@@ -58,3 +58,5 @@ jobs:
         uses: docker/setup-buildx-action@v3
       - name: Deploy
         run: kamal deploy --version=$VERSION
+      - name: Run migrations
+        run: kamal migrate
