@@ -24,6 +24,7 @@ proxy:
 # Environment variables
 env:
   clear:
+    PHX_HOST: learning.iacut.one
     PHX_SERVER: true
     PORT: 4000
     SHELL: /bin/sh
