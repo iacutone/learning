@@ -48,3 +48,4 @@ aliases:
   console: app exec --interactive --reuse "/app/bin/learning remote"
   shell: app exec --interactive --reuse "/bin/sh"
   logs: app logs -f
+  migrate: app exec --reuse "/app/bin/learning eval 'Learning.Release.migrate()'"
