@@ -22,7 +22,8 @@ config :learning, LearningWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "VszlQiCJvpnaAHHPwOouTpeBhVpsWVp+OF9IoJXhTQmKXJxzk+QazY/thudXt9Ch",
   watchers: [
-    esbuild: {Esbuild, :install_and_run, [:learning, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:learning, ~w(--sourcemap=inline --watch)]},
+    esbuild: {Esbuild, :install_and_run, [:css, ~w(--sourcemap=inline --watch)]}
   ]
 
 # ## SSL Support

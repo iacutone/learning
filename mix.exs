@@ -65,9 +65,10 @@ defmodule Learning.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["esbuild.install --if-missing"],
-      "assets.build": ["esbuild learning"],
+      "assets.build": ["esbuild learning", "esbuild css"],
       "assets.deploy": [
         "esbuild learning --minify",
+        "esbuild css --minify",
         "phx.digest"
       ]
     ]
