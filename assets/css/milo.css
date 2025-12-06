@@ -375,3 +375,141 @@ body {
   box-shadow: 0 4px 0 #3BA99C;
   transform: scale(1.02);
 }
+
+
+/* Profile page score colors */
+.result-row { border-left: 4px solid #888; }
+.result-row.score-excellent { border-left-color: #2ECC71; }
+.result-row.score-good { border-left-color: #4ECDC4; }
+.result-row.score-okay { border-left-color: #FF9F43; }
+.result-row.score-needs-work { border-left-color: #FF6B6B; }
+
+.score-text.score-excellent { color: #2ECC71; }
+.score-text.score-good { color: #4ECDC4; }
+.score-text.score-okay { color: #FF9F43; }
+.score-text.score-needs-work { color: #FF6B6B; }
+
+
+/* Form styles for settings and auth pages */
+.simple_form, form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+select {
+  width: 100%;
+  padding: 14px 18px;
+  border: 3px solid #E0E0E0;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  background: white;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #4ECDC4;
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+label {
+  display: block;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+/* Form buttons */
+button[type="submit"],
+.form-btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.15s;
+  border: none;
+  cursor: pointer;
+  background: #4ECDC4;
+  color: white;
+  box-shadow: 0 4px 0 #3BA99C;
+  font-family: 'Nunito', sans-serif;
+}
+
+button[type="submit"]:hover,
+.form-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #3BA99C;
+}
+
+button[type="submit"]:active,
+.form-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #3BA99C;
+}
+
+/* Form field containers */
+.field, [phx-feedback-for] {
+  margin-bottom: 20px;
+}
+
+/* Error messages */
+.phx-no-feedback.invalid-feedback,
+.invalid-feedback {
+  color: #FF6B6B;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+/* Settings page specific */
+.space-y-12 > div {
+  background: #FFF3E0;
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 8px 0 #E8893A;
+  margin-bottom: 25px;
+}
+
+.space-y-12 {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* Header styling */
+header h1, .header h1 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #FF6B6B;
+  margin-bottom: 8px;
+}
+
+header p, .header p {
+  color: #888;
+  font-weight: 600;
+}
+
+/* Link styles in forms */
+.form-link {
+  color: #4D96FF;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+}

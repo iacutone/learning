@@ -23,7 +23,7 @@
       </a>
       <div class="nav-links">
         <%= if @current_user do %>
-          <span style="color: white; font-weight: 600; margin-right: 10px;">Hi there!</span>
+          <.link href={~p"/profile"} class="nav-btn nav-btn-white">📊 My Progress</.link>
           <.link href={~p"/users/log_out"} method="delete" class="nav-btn nav-btn-yellow">
             Bye Bye! 👋
           </.link>
