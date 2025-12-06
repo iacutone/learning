@@ -16,28 +16,58 @@ defmodule LearningWeb.GameLiveTest do
     test "cannot start game without selecting grade", %{conn: conn} do
       {:ok, _view, html} = live(conn, ~p"/game")
 
-      assert html =~ "Pick a grade to start"
+      assert html =~ "Pick Your Grade"
       refute html =~ "LET'S GO!"
     end
 
     test "can select a grade", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/game")
 
+      html = view |> element("button", "Kindergarten") |> render_click()
+
+      # After selecting grade, should show subject selection
+      assert html =~ "Pick a Subject"
+    end
+
+    test "shows subject selection after selecting grade", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
+      html = view |> element("button", "Kindergarten") |> render_click()
+
+      assert html =~ "Pick a Subject"
+      assert html =~ "Math"
+      assert html =~ "Reading"
+      assert html =~ "Words"
+    end
+
+    test "can select a subject", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
       view |> element("button", "Kindergarten") |> render_click()
-      html = render(view)
+      html = view |> element("button", "Math") |> render_click()
 
       # HTML escapes the apostrophe
       assert html =~ "LET" and html =~ "GO"
     end
 
-    test "can start game after selecting grade", %{conn: conn} do
+    test "can start game after selecting grade and subject", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "Kindergarten") |> render_click()
+      view |> element("button", "Math") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
       assert html =~ "Question 1 of 10"
-      assert html =~ "Milo"
+      assert html =~ "Math"
+    end
+
+    test "can go back to grade selection from subject selection", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
+      view |> element("button", "Kindergarten") |> render_click()
+      html = view |> element("button", "← Change Grade") |> render_click()
+
+      assert html =~ "Pick Your Grade"
     end
   end
 
@@ -45,6 +75,7 @@ defmodule LearningWeb.GameLiveTest do
     setup %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/game")
       view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
       view |> element("button", "LET'S GO!") |> render_click()
       %{view: view}
     end
@@ -109,7 +140,7 @@ defmodule LearningWeb.GameLiveTest do
       assert html =~ "Pick Your Grade"
     end
 
-    test "can change grade after game", %{view: view} do
+    test "can change subject after game", %{view: view} do
       for _ <- 1..10 do
         view |> element("button.answer-red") |> render_click()
 
@@ -120,9 +151,9 @@ defmodule LearningWeb.GameLiveTest do
         end
       end
 
-      html = view |> element("button", "Change Grade") |> render_click()
+      html = view |> element("button", "Change Subject") |> render_click()
 
-      assert html =~ "Pick Your Grade"
+      assert html =~ "Pick a Subject"
     end
   end
 
@@ -133,6 +164,7 @@ defmodule LearningWeb.GameLiveTest do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "Kindergarten") |> render_click()
+      view |> element("button", "Math") |> render_click()
       view |> element("button", "LET'S GO!") |> render_click()
 
       for _ <- 1..10 do
@@ -158,6 +190,7 @@ defmodule LearningWeb.GameLiveTest do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "Kindergarten") |> render_click()
+      view |> element("button", "Math") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
       # Kindergarten questions should be simpler
@@ -168,10 +201,46 @@ defmodule LearningWeb.GameLiveTest do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "2nd Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
       assert html =~ "Question 1 of 10"
       assert html =~ "2nd Grade"
+    end
+  end
+
+  describe "GameLive subject-specific questions" do
+    test "math subject shows math questions", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
+      view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
+      html = view |> element("button", "LET'S GO!") |> render_click()
+
+      assert html =~ "Math"
+      assert html =~ "badge-orange"
+    end
+
+    test "reading subject shows reading questions with passages", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
+      view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Reading") |> render_click()
+      html = view |> element("button", "LET'S GO!") |> render_click()
+
+      assert html =~ "Reading"
+      assert html =~ "passage-box"
+    end
+
+    test "words subject shows vocabulary questions", %{conn: conn} do
+      {:ok, view, _html} = live(conn, ~p"/game")
+
+      view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Words") |> render_click()
+      html = view |> element("button", "LET'S GO!") |> render_click()
+
+      assert html =~ "Words"
+      assert html =~ "badge-purple"
     end
   end
 
@@ -180,6 +249,7 @@ defmodule LearningWeb.GameLiveTest do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
       assert html =~ "⭐ 0"
@@ -189,6 +259,7 @@ defmodule LearningWeb.GameLiveTest do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
       view |> element("button", "LET'S GO!") |> render_click()
 
       html = view |> element("button.answer-red") |> render_click()
@@ -198,19 +269,21 @@ defmodule LearningWeb.GameLiveTest do
   end
 
   describe "GameLive question types" do
-    test "displays question type badge", %{conn: conn} do
+    test "displays subject badge", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Reading") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
-      assert html =~ "Reading" or html =~ "Math" or html =~ "Words"
+      assert html =~ "Reading"
     end
 
     test "displays progress bar", %{conn: conn} do
       {:ok, view, _html} = live(conn, ~p"/game")
 
       view |> element("button", "1st Grade") |> render_click()
+      view |> element("button", "Math") |> render_click()
       html = view |> element("button", "LET'S GO!") |> render_click()
 
       assert html =~ "progress-bar"
