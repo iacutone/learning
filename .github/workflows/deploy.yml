@@ -40,6 +40,8 @@ jobs:
           cat > .kamal/secrets << EOF
           AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
+          SES_ACCESS_KEY_ID=${{ secrets.SES_ACCESS_KEY_ID }}
+          SES_SECRET_ACCESS_KEY=${{ secrets.SES_SECRET_ACCESS_KEY }}
           DATABASE_PATH=${{ secrets.DATABASE_PATH }}
           DOCKER_REGISTRY_PASSWORD=${{ secrets.DOCKER_REGISTRY_PASSWORD }}
           HETZNER_HOST=5.161.60.147
@@ -56,6 +58,8 @@ jobs:
           ssh-private-key: ${{ secrets.HETZNER_SSH_PRIVATE_KEY }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Update Kamal Proxy
+        run: kamal proxy reboot
       - name: Deploy
         run: kamal deploy --version=$VERSION
       - name: Run migrations
