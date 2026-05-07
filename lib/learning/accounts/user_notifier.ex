@@ -4,7 +4,7 @@ defmodule Learning.Accounts.UserNotifier do
   alias Learning.Mailer
 
   # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, text_body, html_body \\ nil) do
+  defp deliver(recipient, subject, text_body, html_body) do
     email =
       new()
       |> to(recipient)
