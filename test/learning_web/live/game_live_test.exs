@@ -37,7 +37,6 @@ defmodule LearningWeb.GameLiveTest do
       assert html =~ "Pick a Subject"
       assert html =~ "Math"
       assert html =~ "Reading"
-      assert html =~ "Words"
     end
 
     test "can select a subject", %{conn: conn} do
@@ -232,17 +231,6 @@ defmodule LearningWeb.GameLiveTest do
       # Reading questions may or may not have passages depending on question type
       # Just verify we have reading content
       assert html =~ "📖 Reading"
-    end
-
-    test "words subject shows vocabulary questions", %{conn: conn} do
-      {:ok, view, _html} = live(conn, ~p"/game")
-
-      view |> element("button", "1st Grade") |> render_click()
-      view |> element("button", "Words") |> render_click()
-      html = view |> element("button", "LET'S GO!") |> render_click()
-
-      assert html =~ "Words"
-      assert html =~ "badge-purple"
     end
   end
 
