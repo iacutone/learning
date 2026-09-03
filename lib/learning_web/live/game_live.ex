@@ -2,7 +2,7 @@ defmodule LearningWeb.GameLive do
   use LearningWeb, :live_view
 
   alias Learning.Games
-  alias Learning.Questions.{Math, Reading, Words}
+  alias Learning.Questions.{Math, Reading}
 
   @answer_colors ["answer-red", "answer-blue", "answer-green", "answer-purple"]
 
@@ -104,7 +104,6 @@ defmodule LearningWeb.GameLive do
 
   defp get_questions(grade, "math"), do: get_math_questions(grade)
   defp get_questions(grade, "reading"), do: get_reading_questions(grade)
-  defp get_questions(grade, "words"), do: get_words_questions(grade)
   defp get_questions(grade, _), do: get_math_questions(grade)
 
   defp get_math_questions("kindergarten"), do: Math.kindergarten()
@@ -116,11 +115,6 @@ defmodule LearningWeb.GameLive do
   defp get_reading_questions("first"), do: Reading.first_grade()
   defp get_reading_questions("second"), do: Reading.second_grade()
   defp get_reading_questions(_), do: Reading.kindergarten()
-
-  defp get_words_questions("kindergarten"), do: Words.kindergarten()
-  defp get_words_questions("first"), do: Words.first_grade()
-  defp get_words_questions("second"), do: Words.second_grade()
-  defp get_words_questions(_), do: Words.kindergarten()
 
 
   defp save_game_result(socket) do
@@ -140,11 +134,9 @@ defmodule LearningWeb.GameLive do
   defp current_question(assigns), do: Enum.at(assigns.questions, assigns.current_index)
   defp subject_label("math"), do: "🔢 Math"
   defp subject_label("reading"), do: "📖 Reading"
-  defp subject_label("words"), do: "📝 Words"
   defp subject_label(_), do: ""
   defp subject_badge_class("math"), do: "badge badge-orange"
   defp subject_badge_class("reading"), do: "badge badge-blue"
-  defp subject_badge_class("words"), do: "badge badge-purple"
   defp subject_badge_class(_), do: "badge"
   defp grade_label("kindergarten"), do: "Kindergarten"
   defp grade_label("first"), do: "1st Grade"
@@ -202,7 +194,6 @@ defmodule LearningWeb.GameLive do
             <div style="display: flex; flex-direction: column; gap: 15px; max-width: 350px; margin: 0 auto;">
               <button phx-click="select_subject" phx-value-subject="math" class={"grade-btn #{if @subject == "math", do: "grade-btn-selected", else: "grade-btn-unselected"}"}><span style="font-size: 2rem;">🔢</span><span>Math</span></button>
               <button phx-click="select_subject" phx-value-subject="reading" class={"grade-btn #{if @subject == "reading", do: "grade-btn-selected", else: "grade-btn-unselected"}"}><span style="font-size: 2rem;">📖</span><span>Reading</span></button>
-              <button phx-click="select_subject" phx-value-subject="words" class={"grade-btn #{if @subject == "words", do: "grade-btn-selected", else: "grade-btn-unselected"}"}><span style="font-size: 2rem;">📝</span><span>Words</span></button>
             </div>
             <%= if @subject do %>
               <div style="margin-top: 30px;"><button phx-click="start_game" class="btn btn-green">LET'S GO! 🚀</button></div>
